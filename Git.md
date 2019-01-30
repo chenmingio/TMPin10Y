@@ -9,13 +9,12 @@
 * `git diff --staged`显示add以后文件和上一版的区别
 * `git status`
 * `git add [file]` OR `git add -A` OR `git add .`
-* `git reset [file]` OR 
-* `git rm --cached [file]` git add的逆操作
+* `git reset [file]` OR `git rm --cached [file]` git add的逆操作，unstage
 * `git commit -m "[descriptive message]"`
 * `git log` OR `git log --oneline`
 * `git checkout [SHA]` 我就看看你当初的样子，不能改。
 * `git checkout master` 回到现实
-* `git revert [SHA] and then ;wq` 单独把某次commit效果去除掉
+* `git revert [SHA] => ;wq` 单独把某次commit效果去除掉(git log里多了一个commit，用来抵消你那次commit）
 * `git reset [SHA]` 把某次commit之后的递交都退回到stage阶段。文件内容不会变动。 
 * `git reset [SHA] --hard` 文件内容也删除了。No way back!
 
@@ -35,15 +34,55 @@ A：commit相当于给现在的代码拍快照（也有说是游戏里的安全
 
 > Git一开始只有一条master主线。有一天，一起协作的小伙伴小宝想要单独测试自己的新代码。为了不破坏主线代码，他“复制”了一份主线，给自己独立分支，随便折腾，也不会影响主线。这就是branch，开分支。
 
-新建分支命令：
-xxx
+master branch应该保持持续可用，对外公开。所以新的功能应该在分支里跑通了再merge。
 
-查询分支命令：
-git branch
+新建分支：
 
-### 2
+`git branch feature-1`
 
-终于有一天，小宝跑通了自己的新代码，但同时master线上的代码也被其他小伙伴更新过。这时候他可以选择把别人的新代码更新到自己的分支上，继续在分支上折腾，或者把自己完成的代码上传到主分支。
+转到新分支上：
+
+`git checkout feature-a`
+
+👆合并为一步：
+
+
+`git checkout -b feature-a`
+
+查询分支：
+
+`git branch -a`
+
+删除分支：
+
+`git branch master => git branch -D feature-a`
+
+合并分支：（先回到master才能合并）
+
+`git branch master => git merge feature-a`
+
+合并有冲突时，git把变化都放在master里，你自己改好以后再add/commit=>:wq
+
+
+
+## 远程仓库那些事
+
+`git clone [url]`
+
+### Q&A
+
+Q：Fork、Clone、新建分支都有啥区别？
+
+[The difference between forking and cloning a repos... - GitHub Community Forum](https://github.community/t5/Support-Protips/The-difference-between-forking-and-cloning-a-repository/ba-p/1372)
+
+Fork：复制一份原**仓库**到自己账户下，不会影响原仓库。你可以通过pull request向原仓库主人提出你的修改建议。Fork不会复制issue等内容，只有代码。
+
+Clone：把在服务器上的仓库复制一份到本地，结束。无法和远程仓库沟通。你不能更新远程仓库的内容，也无法向他提供修改建议。（unless you are specifically invited as a collaborator）。当你只是想本地备份一个仓库，或者因为某些原因不准备和原仓库主交流代码，你可以选择Clone。
+
+
+
+
+
 
 第一种情况下，他需要使用
 
@@ -66,23 +105,6 @@ origin、master有啥区别
 ### 4
 
 [Git Remote | Atlassian Git Tutorial](https://www.atlassian.com/git/tutorials/syncing)
-
-## 远程仓库那些事
-
-`git clone [url]`
-
-### Q&A
-
-Q：Fork、Clone、新建分支都有啥区别？
-
-[The difference between forking and cloning a repos... - GitHub Community Forum](https://github.community/t5/Support-Protips/The-difference-between-forking-and-cloning-a-repository/ba-p/1372)
-
-Fork：复制一份原**仓库**到自己账户下，不会影响原仓库。你可以通过pull request向原仓库主人提出你的修改建议。Fork不会复制issue等内容，只有代码。
-
-Clone：把在服务器上的仓库复制一份到本地，结束。无法和远程仓库沟通。你不能更新远程仓库的内容，也无法向他提供修改建议。（unless you are specifically invited as a collaborator）。当你只是想本地备份一个仓库，或者因为某些原因不准备和原仓库主交流代码，你可以选择Clone。
-
-
-
 ### 5
 
 
