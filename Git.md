@@ -12,7 +12,7 @@
 * `git reset [file]` OR `git rm --cached [file]` git add的逆操作，unstage
 * `git commit -m "[descriptive message]"`
 * `git log` OR `git log --oneline`
-* `git checkout [SHA]` 我就看看你当初的样子，不能改。
+* `git checkout [SHA]` 我就看看你当初的样子，不能改动。
 * `git checkout master` 回到现实
 * `git revert [SHA] => ;wq` 单独把某次commit效果去除掉(git log里多了一个commit，用来抵消你那次commit）
 * `git reset [SHA]` 把某次commit之后的递交都退回到stage阶段。文件内容不会变动。 
@@ -67,51 +67,74 @@ master branch应该保持持续可用，对外公开。所以新的功能应该�
 
 ## 远程仓库那些事
 
-`git clone [url]`
 
-### Q&A
+### 本地repo上传到GitHub新仓库
 
-Q：Fork、Clone、新建分支都有啥区别？
+1. 先在GitHub上新建一个repo，名字和本地文件夹相同。不用加README。复制repo链接。
+2. 回到本地terminal，add/commit所有变动，用status确认nothing to commit
+3. `git push [url] master`
+4. 之后变得commit以后，使用`git push [url] master`。如果每次输入url很麻烦，可以如下操作：
+	5. 先新建一个alias`git remote add origin [url]`
+	6. 以后就可以使用 `git push origin master`
 
-[The difference between forking and cloning a repos... - GitHub Community Forum](https://github.community/t5/Support-Protips/The-difference-between-forking-and-cloning-a-repository/ba-p/1372)
+### GitHub新建repo以后clone到本地
 
-Fork：复制一份原**仓库**到自己账户下，不会影响原仓库。你可以通过pull request向原仓库主人提出你的修改建议。Fork不会复制issue等内容，只有代码。
+1. 先在GitHub上新建一个repo。这次可以加README。
+2. 复制链接
+3. 回到本地terminal
+4. `git clone [url]`
+6. `git remote -v` 查询远程alias名称
+7. 变动后提交：`git push origin master`
 
-Clone：把在服务器上的仓库复制一份到本地，结束。无法和远程仓库沟通。你不能更新远程仓库的内容，也无法向他提供修改建议。（unless you are specifically invited as a collaborator）。当你只是想本地备份一个仓库，或者因为某些原因不准备和原仓库主交流代码，你可以选择Clone。
+
+### 使用远端和其他人合作开发的workflow (NetNinja推荐的，并且每个人都有编辑权限）
+
+1. 先回到本地master
+2. `git pull origin master`
+3. 假设你在这个基础上开发新特性 `git checkout -b feature-c`
+4. add/commit以后，**不要直接合并本地master**，先上传到remote的feature-c分支，让其他人确认过，在remote端merge，然后再pull回本地repo。
+5. 所以这时候先`git push origin feature-c`
+6. 然后登录GitHub仓库，点击compare & pull request。
+7. 处理conflict以后merge，同时点击删除branch。Done！
+8. 回到local，先pull最新的更新。
+	9. `git checkout master`
+	10. `git pull origin master`
+9. `git checkout -b feature-d`
+10. 循环
+11. 总结：在本地，永远在新的branch上工作，push到远端的分支，在远端merge，在pull回本地。
+
+### 使用fork为open source project做贡献的workflow（你没有直接编辑权限）
+
+1. 点击fork
+2. 你自己账户下会生成一份相同的repo
+3. clone到本地：复制链接，回到本地 `git clone [url]`
+4. 编辑，直接在master分支上add/commit后，推送到自己账户下的repo master分支 `git push origin master`
+5. 到GitHub的repo里点击new pull request
 
 
+### 问答
 
+Q：Orphan分支又是什么？为什么要设计这个类型？方法是什么？
 
-
-
-第一种情况下，他需要使用
-
-`git pull` 或 `git fetch`
-
-`git pull = git fetch + git merge`
-
-第二种情况下，他会使用pull request命令。
-
-### 3 origin,local,orphan,...
-
-origin、master有啥区别
-
-#### Orphan分支又是什么鬼？为什么要设计这个类型？
+A：
 
 [Git - git-checkout Documentation](https://git-scm.com/docs/git-checkout/1.7.3.1)
 
 [如何建立一個沒有 Parent 的獨立 Git branch | ihower { blogging }](https://ihower.tw/blog/archives/5691)
 
-### 4
+Q：如何给他人分享编辑权限？
 
-[Git Remote | Atlassian Git Tutorial](https://www.atlassian.com/git/tutorials/syncing)
-### 5
+A：
 
+## 其他思考
 
+### git ingore用什么用？
 
-git push是把本地的修改更新到远程xx
+### 其他组织使用什么workflow？和Net Ninja的比较呢？
 
-### 参考
+## 参考
+
+[Git & GitHub Tutorial for Beginners - YouTube](https://www.youtube.com/playlist?list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR) Net Ninja Tutorial
 
 [Git - Reference](https://git-scm.com/docs)
 
@@ -124,5 +147,5 @@ git push是把本地的修改更新到远程xx
 
 ### Log
 
-- 2019年初：第一稿
-- 2019年1月30日：全忘了。重读，重写。
+- 2019年初：第一稿。用时2小时。
+- 2019年1月30日：全忘了。重读，重写。看完了NetNinja的教程。发现第一次写的理解有误。用时3小时。
