@@ -145,6 +145,12 @@ A：
 
 [Learn Git Branching](https://learngitbranching.js.org/)
 
+
+[Generating a new SSH key and adding it to the ssh-agent - User Documentation](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/) SSH创建
+
+[github-git-cheat-sheet](https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf) Git Cheat Sheet
+
+
 ### Log
 
 - 2019年初：第一稿。用时2小时。
