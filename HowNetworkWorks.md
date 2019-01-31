@@ -25,7 +25,7 @@ Q: 听说ip地址每次登录都会变化。那服务器的ip地址变来变去�
 A：是的，你的路由器每次重启都会改变ip地址。有些网站的ip地址是静态ip地址，不会改变，保存在DNS服务器里。大部分ip地址都随机分配。
 
 Q：手机上网不用路由器。它是直接连接互联网的吗？
-A：待查
+A：并不是。通讯服务塔这时候相当于路由器。
 
 ## 登录网页收邮件
 
@@ -52,6 +52,7 @@ A：待查
 
 [IP addresses and DNS (video) | Internet 101 | Khan Academy](https://www.khanacademy.org/computing/computer-science/internet-intro/internet-works-intro/v/the-internet-ip-addresses-and-dns)
 
+[Packet, routers, and reliability | Internet 101 | Computer Science | Khan Academy - YouTube](https://www.youtube.com/watch?v=aD_yi5VjF78&list=PLSQl0a2vh4HD8wtmKZh0nKOsOvP1KYaNO&index=3)
 
 ## log
 
